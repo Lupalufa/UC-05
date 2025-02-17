@@ -1,10 +1,10 @@
 ### Rota para pegar os produtos
-GET http://localhost:3001/produtos
+GET http://localhost:3000/produtos
 
 ### fechando a requicisao
 
 ### Rota criando o produto
-POST http://localhost:3001/produtos
+POST http://localhost:3000/produtos
 Content-Type: application/json
 
 {
