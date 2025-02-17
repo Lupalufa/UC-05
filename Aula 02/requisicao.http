@@ -12,3 +12,14 @@ Content-Type: application/json
     "nome":"GTX 4090 24gb",
     "preco":14450
 }
+
+###
+
+###
+
+PUT http://localhost:3000/produtos/1
+
+{
+    "nome": "André",
+    "preco": 30
+}

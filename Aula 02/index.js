@@ -36,17 +36,17 @@ app.post('/produtos', (requisicao, resposta) => {
   }
 });
 
-app.put('/produto/:id', function (req, res) {
+app.put('/produtos/:id', function (req, res) {
   try {
     const id = parseInt(req.params.id)
     const produto = bancoDados.find(produto => produto.id === id)
     if (!produto) {
       return req.status(404).json({ msg: "Parametro não encontrado" })
     }
-    const { nome, preco } = req.body
+    const { novoNome, novoPreco } = req.body
     if (produto) {
-      produto.nome = nome
-      produto.preco = preco
+      produto.nome = novoNome
+      produto.preco = novoPreco
     }
     res.status(200).json(produto)
   } catch (error) {
@@ -55,7 +55,7 @@ app.put('/produto/:id', function (req, res) {
 })
 
 
-app.delete('/produto/:id', function(req,res){
+app.delete('/produtos/:id', function(req,res){
   try {
     const id = parseInt(req.params.id)
     const index = bancoDados.findIndex(elemento => elemento.id === id)
