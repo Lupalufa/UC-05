@@ -4,7 +4,7 @@ const dotenv = require("dotenv")
 
 dotenv.config();
 
-const port = process.env.PORTA;
+const port = process.env.PORTA
 const app = express();
 
 app.use(express.json());
@@ -78,6 +78,15 @@ app.get("/produtos/:id", function(req,res){
     res.status(200).json(index)
   } catch (error) {
     res.status(500).json({ msg: "Erro ao buscar o/os parametro(s) do banco de dados", erro: error.message })
+  }
+})
+
+app.delete("/produtos", function(req,res){
+  try {
+    bancoDados.length = 0
+    res.status(200).json({msg: "Todos os dados do banco foram deletados com sucesso"})
+  } catch (error) {
+    
   }
 })
 
