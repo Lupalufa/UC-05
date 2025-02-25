@@ -9,8 +9,19 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/produtos', (req, res) => {
-  res.json(bancoDados);
+app.get('/produtos/:id', async (req, res) => {
+  try {
+    const id = req.params.id
+    const dados = [id]
+    const consulta = `select * from produto where id = $1`
+    const resultado = await pool.query(consulta, dados)
+    if(!resultado.rows.length === 0){
+      return res.status(404).json({msg: "Produto não encontrado"})
+    }
+    res.status(200).json(resultado.rows[0])
+  } catch (error) {
+    res.status(500).json({ msg: "Erro ao enviar o banco de dados", erro: error.message })
+  }
 });
 
 app.get('/produtos', async function (req, res) {
@@ -41,19 +52,21 @@ app.post('/produtos', async (req, res) => {
 
 app.put('/produtos/:id', async function (req, res) {
   try {
-    const id = parseInt(req.params.id)
+    const id = req.params.id
+    const { novoNome, novoPreco, novaQuantidade } = req.body
     if (!id) {
       return req.status(404).json({ msg: "Parametro não encontrado" })
     }
     const parametro = [id]
     const consulta = `select * from produto where id = $1`
     const resultado = await pool.query(consulta, parametro)
-    if (resultado.rows) {
-        const dados = [id, novoNome, novoPreco, novaQuantidade]
-        const update = `update produto set nome = $2, preco = $3, quantidade = $4 where id = $1 returning *`
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({msg: "Produto não encontrado!"})
     }
-
-    res.status(200).json(produto)
+    const dados = [id, novoNome, novoPreco, novaQuantidade]
+    const update = `update produto set nome = $2, preco = $3, quantidade = $4 where id = $1 returning *`
+    await pool.query(update, dados)
+    res.status(200).json({msg: "Produto atualizado com sucesso"})
   } catch (error) {
     res.status(500).json({ msg: "Erro ao modificar o parametro do banco de dados", erro: error.message })
   }
@@ -70,30 +83,18 @@ app.delete('/produtos/:id', async function(req,res){
         return res.status(404).json({msg: "Produto não encontrado"})
     }
     const parametros = [id]
-    const consultas = 
-    const resultados = `delete from produto where id = $1`
+    const consultas = `delete from produto where id = $1`
+    await pool.query(consultas, parametros)
+
   } catch (error) {
     res.status(500).json({ msg: "Erro ao deletar o parametro do banco de dados", erro: error.message })
   }
 })
 
-app.get("/produtos/:id", function(req,res){
+app.delete("/produtos", async function(req,res){
   try {
-    const id = req.params.id
-    const index = bancoDados.find(elemento => elemento.id === id)
-    if(!produto){
-      return res.status(404).json({msg: "Não encontrado"})
-    }
-    res.status(200).json(index)
-  } catch (error) {
-    res.status(500).json({ msg: "Erro ao buscar o/os parametro(s) do banco de dados", erro: error.message })
-  }
-})
-
-app.delete("/produtos", function(req,res){
-  try {
-    bancoDados.length = 0
-    res.status(200).json({msg: "Todos os dados do banco foram deletados com sucesso"})
+    const consulta = `delete from produto`
+    await pool.query(consulta)
   } catch (error) {
     
   }

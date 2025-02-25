@@ -1,0 +1,48 @@
+### Rota para pegar os produtos
+GET http://localhost:3000/produtos
+
+### fechando a requicisao
+
+### Rota para pegar os produtos
+GET http://localhost:3000/produtos/1
+
+### fechando a requicisao
+
+### Rota criando o produto
+POST http://localhost:3000/produtos
+Content-Type: application/json
+
+{
+    "nome":"GTX 4090 24gb",
+    "preco":14450,
+    "quantidade": 50
+}
+
+###
+
+###
+
+PUT http://localhost:3000/produtos/2
+Content-Type: application/json
+
+{
+    "novoNome": "André",
+    "novoPreco": "30",
+    "novaQuantidade": 5000
+}
+
+###
+
+###
+
+DELETE http://localhost:3000/produtos/1
+Content-Type: application/json
+
+###
+
+###
+
+DELETE http://localhost:3000/produtos
+Content-Type: application/json
+
+###
