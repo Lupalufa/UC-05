@@ -39,7 +39,7 @@ class AlunoController{
             if(!aluno){
                 return res.status(400).json({msg: "Não foi possivel listar o aluno solicitado"})
             }
-            res.status(200).json({msg: ""})
+            res.status(200).json(aluno)
         } catch (error) {
             
         }
