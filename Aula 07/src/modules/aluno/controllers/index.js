@@ -6,7 +6,7 @@ class AlunoController{
         try {
             const {matricula, nome, email, senha } = req.body
             const novoAluno = await AlunoModel.criar(matricula, nome, email, senha)
-            res.status(400  ).json({msg: "Aluno criado com sucesso", aluno: novoAluno})
+            res.status(201).json({msg: "Aluno criado com sucesso", aluno: novoAluno})
         } catch (error) {
             res.status(500).json({msg: "Erro ao criar o aluno!", erro: error.message})
         }
