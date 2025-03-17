@@ -1,6 +1,6 @@
 const pool = require('../../../config/database')
 
-function ListarProdutos() {
+function ListarAgendamentos() {
     try {
         pool.query = 'select * from produto'
         const resultado = pool.query(query)
