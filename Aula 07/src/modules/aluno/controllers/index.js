@@ -12,11 +12,19 @@ class AlunoController{
         }
     }
 
-    static editar(req,res){
+    static async editar(req,res){
         try {
-            
+            const id = req.params.id
+            const dados = [id]
+            const alunoAtualizado = await AlunoModel.editar(matricula, nome, email, senha)
+            if (!id || !nome || !email || !senha){
+                return res.status(400).json({msg: "Todos os campos devem ser obrigatorios"})
+            }
+            res.status(200).json({msg: "Aluno atualizado com sucesso!",
+                                    aluno: {alunoAtualizado}
+            })
         } catch (error) {
-            
+            res.status(500).json({msg: "Erro ao criar o aluno!", erro: error.message})
         }
     }
     
@@ -28,7 +36,7 @@ class AlunoController{
             }
             res.status(200).json(alunos)
         } catch (error) {
-            res.status(500).json({msg: "Erro ao criar o aluno!", erro: error.message})
+            res.status(500).json({msg: "Erro ao listar os alunos!", erro: error.message})
         }
     }
 

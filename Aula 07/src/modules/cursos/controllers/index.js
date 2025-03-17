@@ -1,6 +1,6 @@
 const CursoModel = require("../models/index")
 
-class AlunoController {
+class CursoController {
     static async criar(req, res){
         try {
             const {nomeCurso, modalidade, dataInicio} = req.body
@@ -41,9 +41,14 @@ class AlunoController {
 
     static async listarPorID(req, res){
         try {
-            
+            const id = req.params.id
+            const curso = await CursoModel.listarPorID(id)
+            if(!curso){
+                return res.status(400).json({msg: "Não foi possivel listar o curso solicitado"})
+            }
+            res.status(200).json(curso)
         } catch (error) {
-            
+            res.status(500).json({msg: "Erro ao listar o curso!", erro: error.message})
         }
     }
 
