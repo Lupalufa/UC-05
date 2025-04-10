@@ -1,0 +1,1 @@
+import ListarAlunos from "../../components/Aluno/ListarAluno/ListarAlunos";

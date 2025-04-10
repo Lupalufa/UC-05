@@ -1,0 +1,1 @@
+const CursoController = require("../controllers/index")
