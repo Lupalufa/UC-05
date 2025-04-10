@@ -4,16 +4,16 @@ import style from "./ListarAlunos.module.css"
 
 function ListarAlunos(){
     const[alunos, setAlunos] = useState([]); // Estado para armazenar a lista de alunos
-    const[errorMsg, setErrorMsg] = useState('') //Estado para armazenar a mensagem de erro
+    const[erroMsg, setErrorMsg] = useState('') //Estado para armazenar a mensagem de erro
 
     // Função que é chamada ao carregar o componente, para buscar os alunos
     async function fetchAlunos() { 
         try {
             const res = await listarTodos(); // Chama o serviço para listar todos os alunos
             setAlunos(res.data) // res.data contém os dados retornados pela API 
-            setErrorMsg(res.data.mensagem)
+            setErrorMsg(res.data.msg)
         } catch (error) {
-            setErrorMsg(error.response.data.mensagem)
+            setErrorMsg(error.response.data.msg)
         }
     }
 
